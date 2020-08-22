@@ -28,6 +28,7 @@ int main()
     g.addEdge(9, 13);
     g.addEdge(13, 15);
     g.printBFS();
+    g.WSearchLimit(5);
     std::cout << "Hello World!\n";
 }
 

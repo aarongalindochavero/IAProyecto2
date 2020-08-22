@@ -61,6 +61,41 @@ public:
         return nullptr;
     }
 
+	NG* WSearchLimit(T data) {
+		Queue<NG*> qs;
+		NG* tmp = padre;
+		int attempts = 0;
+		while (tmp && attempts < 10) {
+			qv.push(tmp);
+			if (tmp->getData() == data) {
+				resetVisitados();
+                std::cout << "found" << std::endl;
+				return tmp;
+				break;
+			}
+			else if (tmp->visitado != true) {
+				tmp->visitado = true;
+				attempts++;
+				for (int i = 0; i < tmp->adyacentes.size(); i++) {
+					qs.push(tmp->adyacentes.at(i));
+					qv.push(tmp->adyacentes.at(i));
+				}
+			}
+			if (qs.root == nullptr) {
+				resetVisitados();
+				return nullptr;
+				break;
+			}
+			tmp = qs.root->dato;
+			qs.pop();
+		}
+        if (attempts >= 10) {
+            
+            std::cout << "attemps exceeded" << std::endl;
+        }
+		return nullptr;
+	}
+
     NG* DSearch(T data) {
         Stack<NG*> ss;
         NG* tmp = padre;
