@@ -1,104 +1,146 @@
 #pragma once
-#pragma once
-#include <iostream>
-#include "Node.h"
-using std::cout; using std::endl;
+#include"Node.h"
+
 template<class T>
-class Queue {
+class Queue
+{
 private:
-	int size = 0;
+	int _size = 0;
 public:
-	Node<T>* root = nullptr;
-	Queue() {};
-	Queue(T data) {
-		if (!root) {
-			root = new Node<T>(data);
-			size = 1;
-		}
-	}
-	~Queue() {};
-	/**
-	* Coloca un elemento al inicio de queue
-	* @param data es el elemento que que se colocara al  inicio del queue
-	*/
-	void push(T data) {
-		if (root) {
-			Node<T>* tmp = root;
-			while (tmp) {
-				if (!tmp->next) {
-					tmp->next = new Node<T>(data);
-					size++;
-					break;
-				}
-				tmp = tmp->next;
-			}
-		}
-		else {
-			root = new Node<T>(data);
-			size++;
-		}
-	}
-	/**
-	* Elimina el elememto que esta el principio del queue
-	*/
-	void pop() {
-		if (root && size > 0) {
-			root = root->next;
-			size--;
-		}
-	}
-	/**
-	* Regresa el emenento del queue que esta al inicio del queue
-	*/
-	int front() {
-		if (root) {
-			Node<T>* tmp = root;
-			int pocicion = 0;
-			while (tmp) {
-				if (pocicion == 0) {
-					return tmp->dato;
-					break;
-				}
-				pocicion++;
-				tmp = tmp->next;
-			}
-		}
-		return 0;
-	}
-	/*
-	* Regresa el emenento del queue que esta al final del queue
-	*/
-	int back() {
-		if (root) {
-			Node<T>* tmp = root;
-			int pocicion = 0;
-			while (tmp) {
-				if (pocicion == size - 1) {
-					return tmp->dato;
-					break;
-				}
-				pocicion++;
-				tmp = tmp->next;
-			}
-		}
-		return 0;
-	}
-	/*
-	* Regresa el tamaño del queue
-	*/
-	int Size() {
-		return size;
-	}
-	/*
-	* Imprime todo el queue
-	*/
-	void Print() {
-		while (root) {
-			cout << root->dato << ", ";
-			pop();
-			if (size == 0) {
-				break;
-			}
-		}
-	}
+	Node<T>* first;
+	Queue():first(nullptr) {};
+	Queue(T value):first(new Node<T>(first, nullptr)) { _size++; };
+	void push(T data);
+	void pop();
+	T front();
+	T back();
+	void swap(T data);
+	int size();
+	void print();
 };
+/*
+** Introduce un elemento hasta el fondo del queue
+** @param data el elemento a introducir
+*/
+template<class T>
+void Queue<T>::push(T data)
+{
+	if (first)
+	{
+		Node<T>* tmp = first;
+		while (tmp->next)
+		{
+			tmp = tmp->next;
+		}
+		tmp->next = new Node<T>(data, nullptr);
+		_size++;
+	}
+	else
+	{
+		first = new Node<T>(data, nullptr);
+		_size++;
+	}
+}
+
+/*
+** Retira el elemento frontal del queue
+*/
+template<class T>
+void Queue<T>::pop()
+{
+	if (first)
+	{
+		Node<T>* tmp = first;
+		first = tmp->next;
+		_size--;
+		delete tmp;
+	}
+	else
+	{
+		throw new std::out_of_range("Queue is empty");
+	}
+}
+
+/*
+** Devuelve el elemento frontal del queue
+*/
+template<class T>
+T Queue<T>::front()
+{
+	if (first)
+		return first->value;
+	else
+		throw new std::out_of_range("Queue is empty");
+}
+
+/*
+** Devuelve el último elemento del queue
+*/
+template<class T>
+T Queue<T>::back()
+{
+	if (first)
+	{
+		Node<T>* tmp = first;
+		while (tmp->next)
+		{
+			tmp = tmp->next;
+		}
+		return tmp->value;
+	}
+	else
+		throw new std::out_of_range("Queue is empty");
+}
+
+/*
+** Intercambia el ultimo elemento del queue por uno nuevo
+** @param data que remplazará
+*/
+template<class T>
+void Queue<T>::swap(T data)
+{
+	if (first)
+	{
+		Node<T>* tmp = first;
+		while (tmp->next)
+		{
+			tmp = tmp->next;
+		}
+		tmp->value = data;
+	}
+	else
+	{
+		throw new std::out_of_range("Queue is empty");
+	}
+}
+
+/*
+** Devuelve el tamaño del queue
+*/
+template<class T>
+int Queue<T>::size()
+{
+	return _size;
+}
+
+/*
+** Imprime todos los elementos del queue, haciendo pop en el progreso
+*/
+template<class T>
+void Queue<T>::print()
+{
+	if (first)
+	{
+		std::cout << "{ ";
+		while (first)
+		{
+			std::cout << front() << " ";
+			pop();
+		}
+		std::cout << "}" << std::endl;
+	}
+	else
+	{
+		std::cout << "Queue is empty" << std::endl;
+	}
+}

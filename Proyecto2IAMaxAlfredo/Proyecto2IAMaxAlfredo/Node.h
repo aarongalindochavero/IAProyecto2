@@ -1,9 +1,10 @@
 #pragma once
-#pragma once
-template <class T>
-class Node {
-public:
-	T dato;
-	Node* next = nullptr;
-	Node(T d) : dato(d) {};
-};
+
+template<class T>
+ struct Node {
+   Node(const T &v) : value(v), next(nullptr) {}
+   Node(const T &v, Node<T>* node) : value(v), next(node) {}
+   ~Node() {};
+   T value;
+   Node<T> *next;
+ };
