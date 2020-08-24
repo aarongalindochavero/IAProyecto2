@@ -144,9 +144,13 @@
   <ItemGroup>
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphNode.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="MultiNode.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="Tree.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

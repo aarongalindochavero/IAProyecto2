@@ -2,33 +2,34 @@
 //
 
 #include <iostream>
-#include "Graph.h"
+#include "Tree.h"
 int main()
 {
-    Graph<int> g(0);
-    g.addEdge(0, 1);
-    g.addEdge(0, 2);
-    g.addEdge(0, 4);
-    g.addEdge(0, 6);
-    g.addEdge(4, 5);
-    g.addEdge(0, 4);
-    g.addEdge(4, 5);
-    g.addEdge(0, 8);
-    g.addEdge(1, 10);
-    g.addEdge(4, 1);
-    g.addEdge(4, 9);
-    g.addEdge(10, 4);
-    g.addEdge(10, 20);
-    g.addEdge(5, 20);
-    g.addEdge(20, 50);
-    g.addEdge(20, 51);
-    g.addEdge(10, 52);
-    g.addEdge(10, 52);
-    g.addEdge(5, 20);
-    g.addEdge(9, 13);
-    g.addEdge(13, 15);
-    g.printBFS();
-    g.WSearchLimit(5);
+    Tree<int> g(0);
+    g.insert(0, 1);
+    g.insert(0, 2);
+    g.insert(0, 4);
+    g.insert(0, 6);
+    g.insert(4, 5);
+    g.insert(0, 4);
+    g.insert(4, 5);
+    g.insert(0, 8);
+    g.insert(1, 10);
+    g.insert(4, 1);
+    g.insert(4, 9);
+    g.insert(10, 4);
+    g.insert(10, 20);
+    g.insert(5, 20);
+    g.insert(20, 50);
+    g.insert(20, 51);
+    g.insert(10, 52);
+    g.insert(10, 52);
+    g.insert(5, 20);
+    g.insert(9, 13);
+    g.insert(13, 15);
+    //g.printBFS(g.root);
+    g.printDFS();
+    //g.WSearchLimit(5);
     std::cout << "Hello World!\n";
 }
 
