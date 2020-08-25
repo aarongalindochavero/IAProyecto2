@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Tree.h"
+#include "Graph.h"
 int main()
 {
     Tree<int> g(0);
@@ -30,7 +31,24 @@ int main()
     //g.printBFS(g.root);
     g.printDFS();
     //g.WSearchLimit(5);
+
     std::cout << "Hello World!\n";
+
+    Graph<int> gr(0, 0);
+    gr.addEdge(0, 1, 5);
+    gr.addEdge(0, 2, 1);
+    gr.addEdge(0, 3, 5);
+    gr.addEdge(3, 5, 3);
+    gr.addEdge(3, 4, 2);
+    gr.addEdge(1, 4, 1);
+    gr.addEdge(2, 4, 2);
+    gr.addEdge(2, 1, 3);
+    gr.addEdge(4, 6, 6);
+    gr.addEdge(5, 6, 2);
+
+    gr.Dijkstra(gr.search(0), gr.search(6));
+
+    gr.printBFS();
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
