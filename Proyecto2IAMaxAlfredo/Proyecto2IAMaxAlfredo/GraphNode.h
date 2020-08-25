@@ -10,6 +10,7 @@ private:
 public:
     int val = 100000;
     bool visitado = false;
+    GraphNode<T>* padre;
     std::vector<GraphNode<T>*> adyacentes;
     std::vector<int> costoAdyacentes;
     T getData() {
