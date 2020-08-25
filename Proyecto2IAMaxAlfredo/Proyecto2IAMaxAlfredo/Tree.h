@@ -23,6 +23,7 @@ public:
 	NODE* searchBFS(const T&, NODE*);
 	void printBFS(NODE* start);
 	void printDFS();
+	NODE* BiderectionalSearch(NODE* start, NODE* end); // Alfredo
 private:
 	NODE* lookForDPS(T,NODE*);
 	void printFromNode(NODE*);
@@ -87,6 +88,40 @@ void Tree<T>::printFromNode(NODE* node)
 			printFromNode(node->vertex[i]);
 		}
 	}
+}
+
+template<class T>
+MultiNode<T>* Tree<T>::BiderectionalSearch(NODE* start, NODE* end) {
+	LinkedList<NODE*> pathToEnd; // Alfredo
+	
+	NODE* tmp;
+	tmp = end;
+
+	if (pathToEnd.size() <= 0) {
+		while (tmp->value != start->value || tmp->parent != nullptr){
+			pathToEnd.push_back(tmp->parent);
+			tmp = tmp->parent;
+		}
+	}
+
+	for (int i = 0; i < pathToEnd->size(); i++) {
+		if (lookForDPS(pathToEnd[i]->value, start)) {
+			std::count << start->value << std::endl;
+			tmp = pathToEnd->last;
+			pathToEnd->erase_back();
+			start = tmp;
+		}
+	}
+
+	for (int i = 0; i < pathToEnd.size(); i++) {
+		std::count << pathToEnd[i] << std::endl;
+	}
+
+	/*for (int i = 0; i < pathToEnd->size(); i++) {
+		pathToEnd.erase_at(i);
+	}*/
+
+	return nullptr;
 }
 
 template<class T>

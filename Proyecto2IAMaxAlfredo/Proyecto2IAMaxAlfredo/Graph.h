@@ -13,23 +13,26 @@ public:
     Queue<NG*> qv;
     NG* padre = nullptr;
     Graph() {}
-    Graph(T data) {
+    Graph(T data, int v) {
         if (!padre) {
-            padre = new NG(data);
+            padre = new NG(data, v);
         }
     }
 
-    void addEdge(T dataParend, T data) {
+    void addEdge(T dataParend, T data, int cost) {
         NG* tmp = DSearch(dataParend);
         if (tmp != nullptr && dataParend != data) {
             if (DSearch(data) == nullptr) {
-                tmp->adyacentes.push_back(new NG(data));
+                tmp->adyacentes.push_back(new NG(data, 10000));
+                tmp->costoAdyacentes.push_back(cost);
             }
             else if (searchPadre(tmp, data) == nullptr) {
                 tmp->adyacentes.push_back(DSearch(data));
+                tmp->costoAdyacentes.push_back(cost);
             }
             NG* tmpD = DSearch(data);
-            tmpD->adyacentes.push_back(tmp);
+            //tmpD->adyacentes.push_back(tmp);
+            //tmpD->costoAdyacentes.push_back(cost);
         }
     }
 
@@ -45,17 +48,17 @@ public:
             }
             else if (tmp->visitado != true) {
                 tmp->visitado = true;
-                for (int i = 0; i < tmp->adyacentes.Size(); i++) {
+                for (int i = 0; i < tmp->adyacentes.size(); i++) {
                     qs.push(tmp->adyacentes.at(i));
                     qv.push(tmp->adyacentes.at(i));
                 }
             }
-            if (qs.root == nullptr) {
+            if (qs.first == nullptr) {
                 resetVisitados();
                 return nullptr;
                 break;
             }
-            tmp = qs.root->dato;
+            tmp = qs.first->value;
             qs.pop();
         }
         return nullptr;
@@ -99,7 +102,7 @@ public:
     NG* DSearch(T data) {
         Stack<NG*> ss;
         NG* tmp = padre;
-        ss.Push(tmp);
+        ss.push(tmp);
         while (tmp) {
             //cout << tmp->visitado << endl;
             if (tmp->getData() == data) {
@@ -113,20 +116,20 @@ public:
                 ss.pop();
                 for (int i = 0; i < tmp->adyacentes.size(); i++) {
                     if (tmp->adyacentes.at(i)->visitado != true) {
-                        ss.Push(tmp->adyacentes.at(i));
+                        ss.push(tmp->adyacentes.at(i));
                     }
                 }
             }
             else {
                 ss.pop();
             }
-            if (ss.root == nullptr) {
+            if (ss.last == nullptr) {
                 resetVisitados();
                 //cout << "nop" << endl;
                 return nullptr;
                 break;
             }
-            tmp = ss.root->dato;
+            tmp = ss.last->value;
         }
         resetVisitados();
         return nullptr;
@@ -170,18 +173,37 @@ public:
                     qv.push(tmp->adyacentes.at(i));
                 }
             }
-            if (qs.root == nullptr) {
+            if (qs.first == nullptr) {
                 resetVisitados();
                 break;
             }
-            tmp = qs.root->dato;
+            tmp = qs.first->value;
             qs.pop();
         }
     }
 
+    void Dijkstra(NG* start, NG* end) {
+        Queue<NG*> qd;
+        NG* tmp = start;
+        qd.push(tmp);
+        while (qd.size() > 0) {
+            for (int i = 0; i < tmp->adyacentes.size(); i++) {
+                int costeConeccion = tmp->costoAdyacentes.at(i) + tmp->val;
+                if (tmp->adyacentes.at(i)->visitado == false) {
+                    if (tmp->adyacentes.at(i)->val < costeConeccion) {
+                        tmp->adyacentes.at(i)->val = costeConeccion;
+                    }
+                    qd.push(tmp->adyacentes.at(i));
+                }
+            }
+            qd.pop();
+        }
+
+    }
+
     void resetVisitados() {
-        while (qv.Size() > 0) {
-            qv.root->dato->visitado = false;
+        while (qv.size() > 0) {
+            qv.first->value->visitado = false;
             qv.pop();
         }
     }
