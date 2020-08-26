@@ -3,6 +3,7 @@
 #include "Queue.h"
 #include "Stack.h"
 #include "LinkedList.h"
+#include "Vector.h"
 #include <iostream>
 
 template<class T>
@@ -99,35 +100,30 @@ void Tree<T>::printFromNode(NODE* node)
 
 template<class T>
 MultiNode<T>* Tree<T>::BiderectionalSearch(NODE* start, NODE* end) {
-	LinkedList<NODE*> pathToEnd; // Alfredo
-	
-	NODE* tmp;
-	tmp = end;
+	if (start && end && lookForDPS(end->value, start)) {
+		Vector<NODE*> pathToEnd; // Alfredo
 
-	if (pathToEnd.size() <= 0) {
-		while (tmp->value != start->value || tmp->parent != nullptr){
-			pathToEnd.push_back(tmp->parent);
-			tmp = tmp->parent;
+		NODE* tmp;
+		tmp = end;
+
+		if (pathToEnd.size() <= 0) {
+			while (tmp->value != start->value) {
+				pathToEnd.push_back(tmp);
+				tmp = tmp->parent;
+			}
 		}
-	}
+		if (lookForDPS(pathToEnd[pathToEnd.size() - 1]->value, start)) {
+			tmp = pathToEnd[pathToEnd.size() - 1];
+			std::cout << "Path to follow" << std::endl;
+			for (int i = 0; i < pathToEnd.size(); i++) {
 
-	for (int i = 0; i < pathToEnd->size(); i++) {
-		if (lookForDPS(pathToEnd[i]->value, start)) {
-			std::count << start->value << std::endl;
-			tmp = pathToEnd->last;
-			pathToEnd->erase_back();
-			start = tmp;
+				std::cout << pathToEnd[pathToEnd.size()-i-1]->value << std::endl;
+			}
+			return tmp;
 		}
+
+		return nullptr;
 	}
-
-	for (int i = 0; i < pathToEnd.size(); i++) {
-		std::count << pathToEnd[i] << std::endl;
-	}
-
-	/*for (int i = 0; i < pathToEnd->size(); i++) {
-		pathToEnd.erase_at(i);
-	}*/
-
 	return nullptr;
 }
 
