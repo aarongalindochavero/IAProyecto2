@@ -36,9 +36,10 @@ int main()
     std::cout << "Hello World!\n";
 
     Graph<int> gr(0, 0);
-    gr.addEdge(0, 1, 4);
+    gr.addEdge(0, 1, 1);
+    gr.addEdge(0, 2, 2);
     gr.addEdge(0, 8, 3);
-    gr.addEdge(0, 2, 1);
+    
     gr.addEdge(0, 3, 5);
     gr.addEdge(3, 5, 3);
     gr.addEdge(3, 4, 2);
@@ -52,9 +53,10 @@ int main()
 
     std::cout << "" << std::endl;
 
-    //gr.Dijkstra(gr.search(0), gr.search(6));
+    gr.Dijkstra(gr.search(0), gr.search(6));
    // gr.hillClimb(gr.search(0), gr.search(5));
-    gr.printHillClimb(gr.search(0), gr.search(5));
+    std::cout << "" << std::endl;
+    gr.printHillClimb(gr.search(0), gr.search(6));
     std::cout << "" << std::endl;
 
     gr.printBFS();
