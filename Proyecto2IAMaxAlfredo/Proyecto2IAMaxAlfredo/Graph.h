@@ -237,7 +237,7 @@ public:
             for (int i = 0; i < tmp->adyacentes.size(); i++)
             {
                 int costeConexion = tmp->costoAdyacentes.at(i) + tmp->val;
-                if (tmp->adyacentes.at(i)->val > costeConexion && DSuperSearch(tmp->adyacentes.at(i),end) == true)
+                if (DSuperSearch(tmp->adyacentes.at(i),end) == true)
                 {
                     tmp->adyacentes.at(i)->val = costeConexion;
 
