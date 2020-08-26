@@ -132,7 +132,6 @@ bool LinkedList<T>::contains(const T& i)
     }
     else
     {
-        throw new std::out_of_range("LinkedList is null");//Null list exeption
         return false;
     }
 }
