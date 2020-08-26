@@ -13,7 +13,7 @@ private:
 public:
 	NODE* root;
 	NODE* last;
-
+	MultiNode<T>* searchDFSIterative(T data);
 	Tree() : root(nullptr), last(nullptr) {}
 	Tree(const T& data) : root(new NODE(data)), last(nullptr) {}
 	Tree(NODE* node) : root(node) {}
@@ -24,10 +24,17 @@ public:
 	void printBFS(NODE* start);
 	void printDFS();
 	NODE* BiderectionalSearch(NODE* start, NODE* end); // Alfredo
+	MultiNode<T>* lookforDPSIterative(T data, NODE* node);
 private:
 	NODE* lookForDPS(T,NODE*);
 	void printFromNode(NODE*);
 };
+
+template<class T>
+MultiNode<T>* Tree<T>::searchDFSIterative(T data)
+{
+	return lookforDPSIterative(data, root);
+}
 
 template<class T>
 MultiNode<T>* Tree<T>::searchDFS(T data)
@@ -120,6 +127,46 @@ MultiNode<T>* Tree<T>::BiderectionalSearch(NODE* start, NODE* end) {
 	/*for (int i = 0; i < pathToEnd->size(); i++) {
 		pathToEnd.erase_at(i);
 	}*/
+
+	return nullptr;
+}
+
+template<class T>
+MultiNode<T>* Tree<T>::lookforDPSIterative(T data, NODE* node)
+{
+	if (!node) return nullptr;
+
+
+	//Aqui se puede añadir a un stack
+	LinkedList<NODE*> visited;
+	Stack<NODE*> stack;
+	NODE* current = node;
+	stack.push(node);
+	while (stack.size() > 0)
+	{
+		current = stack.top();
+		stack.pop();
+
+		if (!visited.contains(current))
+		{
+			std::cout << current->value << " ";
+			visited.push_back(current);
+
+		}
+
+		if (current->value == data)
+		{
+			return current;
+		}
+
+		for (int i = current->vertex.size() - 1; i >= 0; i--)
+		{
+			if (!visited.contains(current->vertex[i]))
+			{
+				stack.push(current->vertex[i]);
+			}
+		}
+	}
 
 	return nullptr;
 }

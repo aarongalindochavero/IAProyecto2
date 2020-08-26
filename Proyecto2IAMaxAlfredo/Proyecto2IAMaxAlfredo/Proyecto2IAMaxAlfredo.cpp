@@ -30,6 +30,7 @@ int main()
     g.insert(13, 15);
     //g.printBFS(g.root);
     g.printDFS();
+    g.searchDFSIterative(52);
     //g.WSearchLimit(5);
 
     std::cout << "Hello World!\n";
