@@ -4,6 +4,7 @@
 #include "GraphNode.h"
 #include "Queue.h"
 #include "Stack.h"
+#include <map>
 using std::cout; using std::endl;
 
 template <class T>
@@ -350,6 +351,148 @@ public:
 
         return pathToVictory;
 
+    }
+
+
+    std::vector<NG*> A_star(NG* start, NG* end)
+    {
+        LinkedList<NG*> nodesToTest;
+        LinkedList<NG*> testedNodes;
+        std::map<NG*,NG*> parentFor; //Guarda el padre para nodo a que es nodo b
+
+        std::vector<NG*> path;
+
+        nodesToTest.push_back(start);
+
+        std::map<NG*, int> globalScore;
+        std::map<NG*, int> localScore;
+
+        globalScore[start] = tempheus(start, end);
+        localScore[start] = 0; 
+
+
+        while (nodesToTest.size() > 0)
+        { 
+            NG* current = nullptr;
+            //Encontrar el globalScore mas pequeño en nodesToTest
+            for (int i = 0; i < nodesToTest.size(); i++)
+            {
+                NG* node = nodesToTest.get_at(i)->value;
+
+                if (globalScore.find(node) == globalScore.end())
+                {
+                    globalScore[node] = 999999;
+                }
+                if (localScore.find(node) == localScore.end())
+                {
+                    localScore[node] = 999999;
+                }
+
+                if (!current) 
+                    current = node;
+
+                if (localScore[node] < localScore[current])
+                    current = node;
+            
+            }
+
+            if (current == end)
+                return reconstruct_path(parentFor, start,current); //Devolver la ruta;
+
+            nodesToTest.erase(current);
+            testedNodes.push_back(current);
+
+            for (int i = 0; i < current->adyacentes.size(); i++)
+            {
+
+                NG* neighbor = current->adyacentes.at(i);
+
+                if (testedNodes.contains(neighbor)) continue;
+
+                if (globalScore.find(neighbor) == globalScore.end())
+                {
+                    globalScore[neighbor] = 999999;
+                }
+                if (localScore.find(neighbor) == localScore.end())
+                {
+                    localScore[neighbor] = 999999;
+                }
+
+                int tempG = localScore[current] + current->costoAdyacentes.at(i);
+
+                if (tempG < localScore[neighbor])
+                {
+                    localScore[neighbor] = tempG;
+                    globalScore[neighbor] = localScore[neighbor] + tempheus(neighbor, end);
+                    parentFor[neighbor] = current;
+                    nodesToTest.push_back(neighbor);
+                }
+            }
+        }
+
+        return path;
+    }
+
+    NG* lookforDPSIterative(T data, NG* node)
+    {
+        if (!node) return nullptr;
+
+
+        //Aqui se puede añadir a un stack
+        LinkedList<NG*> visited;
+        Stack<NG*> stack;
+        NG* current = node;
+        stack.push(node);
+        while (stack.size() > 0)
+        {
+            current = stack.top();
+            stack.pop();
+
+            if (!visited.contains(current))
+            {
+                std::cout << current->getData() << " ";
+                visited.push_back(current);
+
+            }
+
+            if (current->getData() == data)
+            {
+                return current;
+            }
+
+            for (int i = current->adyacentes.size() - 1; i >= 0; i--)
+            {
+                if (!visited.contains(current->adyacentes[i]))
+                {
+                    stack.push(current->adyacentes[i]);
+                }
+            }
+        }
+
+        return nullptr;
+    }
+
+    int tempheus(NG* node, NG* end)
+    {
+        int a = (node->val * node->val + end->val * end->val) / 2;
+        return a;
+    }
+
+    std::vector<NG*> reconstruct_path(std::map<NG*, NG*>& parentOf, NG* start,NG* end)
+    {
+        std::vector<NG*> path;
+        path.push_back(end);
+
+        NG* tmp = parentOf[end];
+
+        while (tmp != start && tmp != nullptr)
+        {
+            path.push_back(tmp);
+            tmp = parentOf[tmp];
+        }
+        path.push_back(start);
+
+        return path;
     }
 
     void resetVisitados() {
