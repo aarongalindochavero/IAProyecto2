@@ -171,6 +171,51 @@ public:
         return nullptr;
     }
 
+    NG* DSearchLimit(T data,int maxDeep, int deep) {
+        int _deep = deep;
+        Stack<NG*> ss;
+        NG* tmp = padre;
+        ss.push(tmp);
+        while (tmp) {
+            //cout << tmp->visitado << endl;
+            if (_deep > maxDeep) {
+                resetVisitados();
+                return nullptr;
+                break;
+            }
+            else {
+                if (tmp->getData() == data) {
+                    resetVisitados();
+                    return tmp;
+                    break;
+                }
+                else if (tmp->visitado != true) {
+                    tmp->visitado = true;
+                    qv.push(tmp);
+                    ss.pop();
+                    for (int i = 0; i < tmp->adyacentes.size(); i++) {
+                        if (tmp->adyacentes.at(i)->visitado != true) {
+                            ss.push(tmp->adyacentes.at(i));
+                        }
+                    }
+                }
+                else {
+                    ss.pop();
+                }
+                if (ss.last == nullptr) {
+                    resetVisitados();
+                    //cout << "nop" << endl;
+                    return nullptr;
+                    break;
+                }
+                tmp = ss.last->value;
+            }
+            _deep++;
+        }
+        resetVisitados();
+        return nullptr;
+    }
+
     NG* searchPadre(NG* head, T data) {
         NG* tmp = head;
         while (tmp) {

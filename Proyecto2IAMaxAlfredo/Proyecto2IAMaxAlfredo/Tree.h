@@ -19,6 +19,7 @@ public:
 	Tree(const T& data) : root(new NODE(data)), last(nullptr) {}
 	Tree(NODE* node) : root(node) {}
 	NODE* searchDFS(T);
+	NODE* searchDFSLimit(T,int,int);
 	bool insert(T parent, T data);
 	void erase(T data);
 	NODE* searchBFS(const T&, NODE*);
@@ -28,6 +29,7 @@ public:
 	MultiNode<T>* lookforDPSIterative(T data, NODE* node);
 private:
 	NODE* lookForDPS(T,NODE*);
+	NODE* lookForDPSLimit(T,NODE*,int, int);
 	void printFromNode(NODE*);
 };
 
@@ -41,6 +43,12 @@ template<class T>
 MultiNode<T>* Tree<T>::searchDFS(T data)
 {
 	return lookForDPS(data, root);
+}
+
+template<class T>
+MultiNode<T>* Tree<T>::searchDFSLimit(T data, int deep, int maxDeep)
+{
+	return lookForDPSLimit(data, root, deep, maxDeep);
 }
 
 template<class T>
@@ -220,6 +228,38 @@ MultiNode<T>* Tree<T>::lookForDPS(T data, NODE* node)
 	//Aqui se borraría del stack
 
 	return nullptr;
+}
+
+template<class T>
+MultiNode<T>* Tree<T>::lookForDPSLimit(T data, NODE* node, int deep, int maxDeep)
+{
+	int _deep = deep;
+	if (_deep <= maxDeep) {
+		_deep++;
+		if (!node) return nullptr;
+
+		if (node->value == data)
+		{
+			last = node;
+			std::cout << "Encontrado" << std::endl;
+			return node;
+		}
+
+		//Aqui se puede añadir a un stack
+		for (int i = 0; i < node->vertex.size(); i++)
+		{
+			if (node->vertex[i])
+				lookForDPSLimit(data, node->vertex[i], _deep, maxDeep);
+			if (last->value == data) {
+				_deep--;
+				return last;
+			}
+		}
+		//Aqui se borraría del stack
+
+		return nullptr;
+	}
+	
 }
 
 template<class T>
