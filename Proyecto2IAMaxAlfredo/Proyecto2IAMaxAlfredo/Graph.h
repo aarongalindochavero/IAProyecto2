@@ -10,6 +10,7 @@ template <class T>
 class Graph {
     typedef GraphNode<T> NG;
 public:
+    std::vector<NG*> yellowRoad;
     Queue<NG*> qv;
     NG* padre = nullptr;
     Graph() {}
@@ -99,6 +100,41 @@ public:
 		return nullptr;
 	}
 
+    bool DSuperSearch(NG* start, NG* end) {
+        Stack<NG*> ss;
+        NG* tmp = start;
+        ss.push(tmp);
+        while (tmp) {
+            //cout << tmp->visitado << endl;
+            if (tmp->getData() == end->getData()) {
+                resetVisitados();
+                return true;
+                break;
+            }
+            else if (tmp->visitado != true) {
+                tmp->visitado = true;
+                qv.push(tmp);
+                ss.pop();
+                for (int i = 0; i < tmp->adyacentes.size(); i++) {
+                    if (tmp->adyacentes.at(i)->visitado != true) {
+                        ss.push(tmp->adyacentes.at(i));
+                    }
+                }
+            }
+            else {
+                ss.pop();
+            }
+            if (ss.last == nullptr) {
+                resetVisitados();
+                //cout << "nop" << endl;
+                return false;
+                break;
+            }
+            tmp = ss.last->value;
+        }
+        resetVisitados();
+        return false;
+    }
     NG* DSearch(T data) {
         Stack<NG*> ss;
         NG* tmp = padre;
@@ -226,7 +262,56 @@ public:
             qs.pop();
         }
     }
+    std::vector<NG*> hillClimb(NG* start, NG* end)
+    {
+        NG* tmp2 = start;
+        NG* tmp = start;
+        bool onVector = false;
+        start->val = 0;
+        for (int i = 0; i < yellowRoad.size(); i++)
+        {
+            if (yellowRoad.at(i) == start)
+            {
+                onVector = true;
+            }
+        }
+        if (!onVector)
+        {
+            yellowRoad.push_back(start);
+        }
+            for (int i = 0; i < tmp->adyacentes.size(); i++)
+            {
+                int costeConexion = tmp->costoAdyacentes.at(i) + tmp->val;
+                if (DSuperSearch(tmp->adyacentes.at(i),end) == true)
+                {
+                    tmp->adyacentes.at(i)->val = costeConexion;
 
+                    if (tmp2->val == 0 || tmp2->val > tmp->adyacentes.at(i)->val)
+                    {
+                        tmp2 = tmp->adyacentes.at(i);
+                    }
+                }
+            }
+            yellowRoad.push_back(tmp2);
+            if (tmp2 != end)
+            {
+                hillClimb(tmp2, end);
+            }
+
+            return yellowRoad;
+    }
+
+    void printHillClimb(NG* start,NG* end)
+    {
+        hillClimb(start, end);
+        for (int i = 0; i < yellowRoad.size(); i++)
+        {
+        cout << yellowRoad.at(i)->getData()<< "\n";
+
+        }
+
+
+    }
     std::vector<NG*> Dijkstra(NG* start, NG* end) {
         Queue<NG*> qd;
         std::vector<NG*> pathToVictory;
