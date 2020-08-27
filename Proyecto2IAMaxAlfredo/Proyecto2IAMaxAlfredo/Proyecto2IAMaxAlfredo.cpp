@@ -7,7 +7,7 @@
 int main()
 {
     Tree<int> g(0);
-    g.insert(0, 1);
+    /*g.insert(0, 1);
     g.insert(0, 2);
     g.insert(0, 4);
     g.insert(0, 6);
@@ -27,15 +27,29 @@ int main()
     g.insert(10, 52);
     g.insert(5, 20);
     g.insert(9, 13);
-    g.insert(13, 15);
+    g.insert(13, 15);*/
+
+    g.insert(0, 1);
+    g.insert(0, 2);
+    g.insert(0, 3);
+    g.insert(0, 4);
+    g.insert(1, 7);
+    g.insert(2, 5);
+    g.insert(2, 6);
+    g.insert(3, 10);
+    g.insert(7, 9);
+    g.insert(9, 11);
+
+    g.searchDFSLimit(10, 0, 2);
+
     //g.printBFS(g.root);
     g.printDFS();
-    g.searchDFSIterative(52);
+    //g.searchDFSIterative(52);
     //g.WSearchLimit(5);
 
-    std::cout << "Hello World!\n";
+    //std::cout << "Hello World!\n";
 
-    Graph<int> gr(0, 0);
+    /*Graph<int> gr(0, 0);
     gr.addEdge(0, 1, 4);
     gr.addEdge(0, 2, 1);
     gr.addEdge(0, 3, 5);
@@ -45,17 +59,18 @@ int main()
     gr.addEdge(2, 4, 2);
     gr.addEdge(2, 1, 3);
     gr.addEdge(4, 6, 6);
-    gr.addEdge(5, 6, 2);
+    gr.addEdge(5, 6, 2);*/
 
-    gr.search(0);
+    //gr.search(0);
 
-    std::cout << "" << std::endl;
+    //std::cout << "" << std::endl;
 
-    gr.Dijkstra(gr.search(0), gr.search(6));
+    //gr.Dijkstra(gr.search(0), gr.search(6));
+    //std::cout << gr.DSearchLimit(1, 7, 0);
 
-    std::cout << "" << std::endl;
+    /*std::cout << "" << std::endl;
 
-    gr.printBFS();
+    gr.printBFS();*/
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
