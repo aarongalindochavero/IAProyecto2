@@ -296,8 +296,10 @@ void LinkedList<T>::erase_at(int index)
                 Node<T>* tmp = root;
                 root = root->next;
                 if (root == last)
-                    last = root->next;
+                    last = tmp->next;
                 _size--;
+                if (_size == 0)
+                    last = nullptr;
                 delete tmp;
             }
             else
