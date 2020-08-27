@@ -6,6 +6,7 @@ class Queue
 {
 private:
 	int _size = 0;
+
 public:
 	Node<T>* first;
 	Queue():first(nullptr) {};

@@ -50,6 +50,13 @@ int main()
     //std::cout << "Hello World!\n";
 
     Graph<int> gr(0, 0);
+<<<<<<< Updated upstream
+=======
+    /*gr.addEdge(0, 1, 1);
+    gr.addEdge(0, 2, 2);
+    gr.addEdge(0, 8, 3);
+
+>>>>>>> Stashed changes
     gr.addEdge(0, 3, 5);
     gr.addEdge(0, 1, 4);
     gr.addEdge(0, 2, 1);
@@ -59,8 +66,19 @@ int main()
     gr.addEdge(3, 5, 3);
     gr.addEdge(3, 4, 2);
     gr.addEdge(4, 6, 6);
-    gr.addEdge(5, 6, 2);
+    gr.addEdge(5, 6, 2);*/
+    gr.addEdge(0, 3, 1);
+    gr.addEdge(3, 4, 2);
+    gr.addEdge(3, 6, 3);
+    gr.addEdge(4, 11, 1);
+    gr.addEdge(4, 12, 2);
+    gr.addEdge(6, 12, 3);
+    gr.addEdge(6, 8, 1);
+    gr.addEdge(11, 9, 2);
+    gr.addEdge(12, 9, 3);
+    gr.addEdge(9, 15, 2);
 
+<<<<<<< Updated upstream
     //gr.search(0);
     std::cout << "" << std::endl;
 
@@ -70,6 +88,21 @@ int main()
 
 
     gr.printBFS();
+=======
+    gr.HeuristicFunction(15);
+    gr.search(0);
+
+    // std::cout << "" << std::endl;
+
+    // gr.Dijkstra(gr.search(0), gr.search(6));
+    //// gr.hillClimb(gr.search(0), gr.search(5));
+    // std::cout << "" << std::endl;
+    // gr.printHillClimb(gr.search(0), gr.search(6));
+    // std::cout << "" << std::endl;
+
+    gr.WSearchLimit(15);
+    //gr.printBFS();
+>>>>>>> Stashed changes
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
