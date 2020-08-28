@@ -317,7 +317,6 @@ public:
 
     std::vector<NG*> Dijkstra(NG* start, NG* end) {
         std::vector<NG*> pathToVictory;
-<<<<<<< Updated upstream
         if (start != nullptr && end != nullptr) {
             if (DSuperSearch(start, end)) {
                 Queue<NG*> qd;
@@ -338,22 +337,6 @@ public:
                             qd.push(tmp->adyacentes.at(i));
                         }
                         //cout << tmp->adyacentes.at(i)->getData() << endl;
-=======
-        NG* tmp = start;
-        start->val = 0;
-        qd.push(tmp);
-        while (qd.size() > 0) {
-            for (int i = 0; i < tmp->adyacentes.size(); i++) {
-                int costeConexion = tmp->costoAdyacentes.at(i) + tmp->val;
-                
-                    if (tmp->adyacentes.at(i)->val > costeConexion) {
-                        tmp->adyacentes.at(i)->val = costeConexion;
-                        tmp->adyacentes.at(i)->padre = tmp;
-                    }
-                    if (tmp->adyacentes.at(i)->visitado == false) {
-                        tmp->adyacentes.at(i)->visitado = true;
-                        qd.push(tmp->adyacentes.at(i));
->>>>>>> Stashed changes
                     }
                     tmp = qd.front();
                     qd.pop();
@@ -361,19 +344,16 @@ public:
 
                 tmp = end;
                 do {
-                    cout << tmp->getData() << endl;
                     pathToVictory.push_back(tmp);
                     tmp = tmp->padre;
                     //cout << tmp->getData() << endl;
                 } while (tmp != start);
-                cout << tmp->getData() << endl;
                 resetVisitados();
                 //cout << end->val << endl;
 
                 return pathToVictory;
             }
         }
-        std::cout << "no se pudo encontrar un camino" << std::endl;
         return pathToVictory;
 
     }
@@ -539,7 +519,7 @@ public:
             cout << heuristic;
             return heuristic;
         }
-        return heuristic
+        return heuristic;
 
     }
 

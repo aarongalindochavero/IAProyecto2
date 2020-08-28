@@ -1,33 +1,9 @@
-// Proyecto2IAMaxAlfredo.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
-
 #include <iostream>
 #include "Tree.h"
 #include "Graph.h"
 int main()
 {
     Tree<int> g(0);
-    /*g.insert(0, 1);
-    g.insert(0, 2);
-    g.insert(0, 4);
-    g.insert(0, 6);
-    g.insert(4, 5);
-    g.insert(0, 4);
-    g.insert(4, 5);
-    g.insert(0, 8);
-    g.insert(1, 10);
-    g.insert(4, 1);
-    g.insert(4, 9);
-    g.insert(10, 4);
-    g.insert(10, 20);
-    g.insert(5, 20);
-    g.insert(20, 50);
-    g.insert(20, 51);
-    g.insert(10, 52);
-    g.insert(10, 52);
-    g.insert(5, 20);
-    g.insert(9, 13);
-    g.insert(13, 15);*/
 
     g.insert(0, 1);
     g.insert(0, 2);
@@ -40,23 +16,37 @@ int main()
     g.insert(7, 9);
     g.insert(9, 11);
 
-    g.searchDFSLimit(10, 0, 2);
 
-    //g.printBFS(g.root);
-    g.printDFS();
-    //g.searchDFSIterative(52);
-    //g.WSearchLimit(5);
-
-    //std::cout << "Hello World!\n";
-
+    int valToSearch = 6;
+    std::cout << "----Arbol----" << std::endl;
+    if (g.searchBFS(valToSearch, g.root))
+    {
+        std::cout << "Encontre el " << valToSearch << " con BFS" << '\n';
+    }
+    std::cout << "" << std::endl;
+    if (g.searchDFS(valToSearch))
+    {
+        std::cout << "Encontre el " << valToSearch << " con DFS" << '\n';
+    }
+    std::cout << "" << std::endl;
+    if (g.searchDFSIterative(valToSearch))
+    {
+        std::cout << "Encontre el " << valToSearch << " con DFSiterative" << '\n';
+    }
+    std::cout << "" << std::endl;
+    if (g.searchDFSLimit(valToSearch, 0, 2))
+    {
+        std::cout << "Encontre el " << valToSearch << " con DFSLIMIT"<< '\n';
+    }
+    std::cout << "" << std::endl;
+    MultiNode<int>* nd = g.BiderectionalSearch(g.root, g.searchDFS(valToSearch));
+    if (nd)
+    {
+        std::cout << "Con bidireccional el nodo para "<< valToSearch <<" que sigue es " << nd->value << '\n';
+    }
+    std::cout << "" << std::endl;
+    std::cout << "----Grafo----" << std::endl;
     Graph<int> gr(0, 0);
-<<<<<<< Updated upstream
-=======
-    /*gr.addEdge(0, 1, 1);
-    gr.addEdge(0, 2, 2);
-    gr.addEdge(0, 8, 3);
-
->>>>>>> Stashed changes
     gr.addEdge(0, 3, 5);
     gr.addEdge(0, 1, 4);
     gr.addEdge(0, 2, 1);
@@ -66,51 +56,60 @@ int main()
     gr.addEdge(3, 5, 3);
     gr.addEdge(3, 4, 2);
     gr.addEdge(4, 6, 6);
-    gr.addEdge(5, 6, 2);*/
-    gr.addEdge(0, 3, 1);
-    gr.addEdge(3, 4, 2);
-    gr.addEdge(3, 6, 3);
-    gr.addEdge(4, 11, 1);
-    gr.addEdge(4, 12, 2);
-    gr.addEdge(6, 12, 3);
-    gr.addEdge(6, 8, 1);
-    gr.addEdge(11, 9, 2);
-    gr.addEdge(12, 9, 3);
-    gr.addEdge(9, 15, 2);
-
-<<<<<<< Updated upstream
-    //gr.search(0);
-    std::cout << "" << std::endl;
-
-    gr.Dijkstra(gr.search(0), gr.search(11));
+    gr.addEdge(5, 6, 2);
 
     std::cout << "" << std::endl;
 
+    auto djstra = gr.Dijkstra(gr.padre, gr.search(6));
 
-    gr.printBFS();
-=======
-    gr.HeuristicFunction(15);
-    gr.search(0);
+    if (djstra.size() > 0)
+    {
+        std::cout << "Camino para Dijkstra -> ";
+        for (auto nodo : djstra)
+        {
+            std::cout << nodo->getData() << " ";
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "Ese camino no existe" << std::endl;
+    }
 
-    // std::cout << "" << std::endl;
+    std::cout << "" << std::endl;
 
-    // gr.Dijkstra(gr.search(0), gr.search(6));
-    //// gr.hillClimb(gr.search(0), gr.search(5));
-    // std::cout << "" << std::endl;
-    // gr.printHillClimb(gr.search(0), gr.search(6));
-    // std::cout << "" << std::endl;
+    auto aStar = gr.A_star(gr.padre, gr.search(6));
 
-    gr.WSearchLimit(15);
-    //gr.printBFS();
->>>>>>> Stashed changes
+    if (aStar.size() > 0)
+    {
+        std::cout << "Camino para A* -> ";
+        for (auto nodo : aStar)
+        {
+            std::cout << nodo->getData() << " ";
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "Ese camino no existe" << std::endl;
+    }
+
+    std::cout << "" << std::endl;
+
+    auto hillClimb = gr.hillClimb(gr.padre, gr.search(6));
+
+    if (aStar.size() > 0)
+    {
+        std::cout << "Camino para Hillclimb -> ";
+        for (auto nodo : aStar)
+        {
+            std::cout << nodo->getData() << " ";
+        }
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "Ese camino no existe" << std::endl;
+    }
+
 }
-
-// Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar
-// Depurar programa: F5 o menú Depurar > Iniciar depuración
-
-// Sugerencias para primeros pasos: 1. Use la ventana del Explorador de soluciones para agregar y administrar archivos
-//   2. Use la ventana de Team Explorer para conectar con el control de código fuente
-//   3. Use la ventana de salida para ver la salida de compilación y otros mensajes
-//   4. Use la ventana Lista de errores para ver los errores
-//   5. Vaya a Proyecto > Agregar nuevo elemento para crear nuevos archivos de código, o a Proyecto > Agregar elemento existente para agregar archivos de código existentes al proyecto
-//   6. En el futuro, para volver a abrir este proyecto, vaya a Archivo > Abrir > Proyecto y seleccione el archivo .sln
