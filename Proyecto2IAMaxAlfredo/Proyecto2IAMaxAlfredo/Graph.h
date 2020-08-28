@@ -507,4 +507,14 @@ public:
             qv.pop();
         }
     }
+
+    int HeuristicFunction(NG* current, NG* end) {
+        int heuristic = end->val;
+        if (current->val > end->val) {
+            heuristic *= current->val / current->adyacentes.size();
+            cout << heuristic;
+            return heuristic;
+        }
+        return heuristic;
+    }
 };

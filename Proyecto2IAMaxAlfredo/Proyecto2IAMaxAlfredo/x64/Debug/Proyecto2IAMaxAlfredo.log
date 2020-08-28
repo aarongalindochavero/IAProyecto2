@@ -1,3 +1,3 @@
 ﻿  Proyecto2IAMaxAlfredo.cpp
-C:\Users\aaron\OneDrive\Documentos\sae\7 trimestre\inteligencia artificial\segunda\IAProyecto2\Proyecto2IAMaxAlfredo\Proyecto2IAMaxAlfredo\Tree.h(267): warning C4715: 'Tree<int>::lookForDPSLimit': no todas las rutas de acceso de control devuelven un valor
-  Proyecto2IAMaxAlfredo.vcxproj -> C:\Users\aaron\OneDrive\Documentos\sae\7 trimestre\inteligencia artificial\segunda\IAProyecto2\Proyecto2IAMaxAlfredo\x64\Debug\Proyecto2IAMaxAlfredo.exe
+C:\Users\Usuario\Desktop\proyecto adidier\IAProyecto2\Proyecto2IAMaxAlfredo\Proyecto2IAMaxAlfredo\Tree.h(263): warning C4715: 'Tree<int>::lookForDPSLimit': no todas las rutas de acceso de control devuelven un valor
+  Proyecto2IAMaxAlfredo.vcxproj -> C:\Users\Usuario\Desktop\proyecto adidier\IAProyecto2\Proyecto2IAMaxAlfredo\x64\Debug\Proyecto2IAMaxAlfredo.exe
