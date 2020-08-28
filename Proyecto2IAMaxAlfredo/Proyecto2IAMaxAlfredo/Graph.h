@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include <iostream>
+#include <stack>
 #include "GraphNode.h"
 #include "Queue.h"
 #include "Stack.h"
@@ -52,7 +53,6 @@ public:
                 tmp->visitado = true;
                 for (int i = 0; i < tmp->adyacentes.size(); i++) {
                     qs.push(tmp->adyacentes.at(i));
-                    qv.push(tmp->adyacentes.at(i));
                 }
             }
             if (qs.first == nullptr) {
@@ -81,17 +81,17 @@ public:
 			else if (tmp->visitado != true) {
 				tmp->visitado = true;
 				attempts++;
-				for (int i = 0; i < tmp->adyacentes.size(); i++) {
-					qs.push(tmp->adyacentes.at(i));
-					qv.push(tmp->adyacentes.at(i));
+                for (int i = 0; i < tmp->adyacentes.size(); i++) {
+                    if(tmp->adyacentes.at(i)->visitado == false)
+                        qs.push(tmp->adyacentes.at(i));
 				}
 			}
-			if (qs.root == nullptr) {
+			if (qs.first == nullptr) {
 				resetVisitados();
 				return nullptr;
 				break;
 			}
-			tmp = qs.root->dato;
+            tmp = qs.first->value;
 			qs.pop();
 		}
         if (attempts >= 10) {
@@ -136,6 +136,7 @@ public:
         resetVisitados();
         return false;
     }
+   
     NG* DSearch(T data) {
         Stack<NG*> ss;
         NG* tmp = padre;
@@ -153,7 +154,8 @@ public:
                 ss.pop();
                 for (int i = 0; i < tmp->adyacentes.size(); i++) {
                     if (tmp->adyacentes.at(i)->visitado != true) {
-                        ss.push(tmp->adyacentes.at(i));
+                        if (tmp->adyacentes.at(i)->visitado != true)
+                            ss.push(tmp->adyacentes.at(i));
                     }
                 }
             }
@@ -252,7 +254,6 @@ public:
                 cout << tmp->getData() << endl;
                 for (int i = 0; i < tmp->adyacentes.size(); i++) {
                     qs.push(tmp->adyacentes.at(i));
-                    qv.push(tmp->adyacentes.at(i));
                 }
             }
             if (qs.first == nullptr) {
@@ -313,6 +314,7 @@ public:
 
 
     }
+
     std::vector<NG*> Dijkstra(NG* start, NG* end) {
         std::vector<NG*> pathToVictory;
         if (start != nullptr && end != nullptr) {
@@ -355,8 +357,6 @@ public:
             }
         }
         std::cout << "no se pudo encontrar un camino" << std::endl;
-        return pathToVictory;
-
     }
 
 
@@ -380,7 +380,7 @@ public:
         while (nodesToTest.size() > 0)
         { 
             NG* current = nullptr;
-            //Encontrar el globalScore mas peque�o en nodesToTest
+            //Encontrar el globalScore mas pequeño en nodesToTest
             for (int i = 0; i < nodesToTest.size(); i++)
             {
                 NG* node = nodesToTest.get_at(i)->value;
@@ -444,7 +444,7 @@ public:
         if (!node) return nullptr;
 
 
-        //Aqui se puede a�adir a un stack
+        //Aqui se puede añadir a un stack
         LinkedList<NG*> visited;
         Stack<NG*> stack;
         NG* current = node;
@@ -508,13 +508,20 @@ public:
         }
     }
 
+    /*
+    *Recibe el nodo en el que se encutra y el nodo final al que se quiere llegar
+    *Regresa un valor para saber si tu nodo cumple con la condición de la función
+    */
     int HeuristicFunction(NG* current, NG* end) {
-        int heuristic = end->val;
+         
+        int heuristic=end->val;
         if (current->val > end->val) {
-            heuristic *= current->val / current->adyacentes.size();
+            heuristic *= current->val / current->adyacentes.size(); 
             cout << heuristic;
             return heuristic;
         }
-        return heuristic;
+        return heuristic
+
     }
+
 };
