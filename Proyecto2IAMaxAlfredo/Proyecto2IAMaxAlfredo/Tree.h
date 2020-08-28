@@ -122,11 +122,6 @@ MultiNode<T>* Tree<T>::BiderectionalSearch(NODE* start, NODE* end) {
 		}
 		if (lookForDPS(pathToEnd[pathToEnd.size() - 1]->value, start)) {
 			tmp = pathToEnd[pathToEnd.size() - 1];
-			std::cout << "Path to follow" << std::endl;
-			for (int i = 0; i < pathToEnd.size(); i++) {
-
-				std::cout << pathToEnd[pathToEnd.size()-i-1]->value << std::endl;
-			}
 			return tmp;
 		}
 
@@ -153,7 +148,6 @@ MultiNode<T>* Tree<T>::lookforDPSIterative(T data, NODE* node)
 
 		if (!visited.contains(current))
 		{
-			std::cout << current->value << " ";
 			visited.push_back(current);
 
 		}
